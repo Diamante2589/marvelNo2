@@ -8,33 +8,46 @@ const getMarvels = async () => {
     const response = await fetch(url);
     const responseJson = await response.json();
     const marvels = responseJson.data.results;
+    const container =document.querySelector('#marvel-row');
+    let contentHTML= '';
 
-    console.log(marvels);
+   console.log(marvels);
+
+    // como toca traer info de varios lados , para ello es mejor crear un objeto
     
-    //crear una funcion para recorrer el arreglo de marvel
 
     for (let i = 0; i < marvels.length; i++){
           
         const marvel=marvels[i];
-        const marvelUrl=marvel.urls;
-        
+        const marvelUrl=marvel.urls[0].url;
+        console.log(marvelUrl)
+
+        contentHTML+=`<div class="col-md-4">
+                 <a href="${marvelUrl}" target="_blank">
+                 <img src="${marvel.thumbnail.path}.${marvel.thumbnail.extension}" alt="${marvel.name}" class="img-thumbnail">
+                </a>
+                <h3 class="title">${marvel.name}</h3>
+                </div>`;
+      /*  
         //le digo a js que vaya y busque elementos de una url(necesito un fetch)
         const response= await fetch(marvelUrl);
         const responseJson = await response.json();
 
-        console.log(marvelUrl);
+        console.log(responseJson);
 
         
 
         //ahora necesito una manera de poner esto en un solo arreglo
 
-        //const img =`${marvel.thumbnail["path"] + "." + marvel.thumbnail["extension"]}`;
+       const img =responseJson;
 
-       /* const marvelObject = {
+       const marvelObject = {
             name: marvel.name,
             img: img,
-        };
-    */
+            */
+        };  
+        container.innerHTML=contentHTML;
+    
 
      //   marvelsGlobal.push(marvelObject);
         
@@ -48,7 +61,7 @@ const getMarvels = async () => {
  
     
    
-}
+
 
 //crear un arreglo que tenga nuestro primer nombre 
 
